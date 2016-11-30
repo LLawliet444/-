@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<form action="PHP实现图片转字符画.php" method="post" enctype="multipart/form-data">
+		<table align="center" border="1" rules="all" bordercolor="#ccc">
+			<tr>
+				<td align='right'>采样方式(几个像素采样一次)：</td>
+				<td><input type="text" name="pix"></input></td>
+			</tr>
+			<tr>
+				<td align='right'>字符大小：</td>
+				<td><input type="text" name="fontSize"></input></td>
+			</tr>
+			<tr>
+				<td align='right'>选择图片：</td>
+				<td><input type="file" name="pic"></input></td>
+			</tr>
+			<tr>
+				<td align='right'>转换方式：</td>
+				<td>
+					<input type="radio" name="method" value="change_mode_1">彩色</input>
+					<input type="radio" name="method" value="change_mode_2">灰度</input>
+					<input type="radio" name="method" value="change_mode_3">彩色+灰度</input>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align='center'><input type="submit" value="确定"></input></td>			
+			</tr>		
+		</table>		
+	</form>
+</body>
+</html>
