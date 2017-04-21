@@ -259,5 +259,42 @@ function change_mode_3($arr,$radio,$fontSize){
 	imagedestroy($imgNew);
 	die('操作成功！');
 }
+//像素点
+function change_mode_4($arr,$radio,$fontSize){
+	$info = $_FILES['pic'];
+	$filename = rand(0,100).$info['name'];
+	$src = './images/'.$filename;
+	if (move_uploaded_file($info['tmp_name'], $src)) {
+		
+	}else{
+		die('文件上传失败！');
+	}
+	//获取图片信息
+	$info = getimagesize($src);
+	//从图片创建画布
+	$createFun = str_replace('/', 'createfrom', $info['mime']);
+	$img = $createFun($src);
+	//创建新画布
+	$imgNew = imagecreatetruecolor($info[0], $info[1]);
+	$white = imagecolorallocate($imgNew, 255,255,255);
+	imagefill($imgNew,0,0,$white);	
 
-?>
+	// $x = (2*$radio+3)*cos(PI/6)
+	// $y = (2*$radio+3)/2;
+	for ($i = 0,$x = $radio+3; $x < $info[0]; $x = $x+$radio*2+3,$i++) { 
+		for ($j = 0,$y=$radio+3; $y < $info[1]; $y = $y+$radio*2+3,$j++) { 
+			$rgb = imagecolorat($img, $x, $y);
+			imagefilledrectangle($imgNew,$x - $radio,$y - $radio,$x + $radio,$y + $radio,$rgb);
+		}
+	}
+	$output = str_replace('/', '', $info['mime']);
+	//删除上传文件
+	unlink($src);
+	//转换后图片保存名字
+	$newName = iconv('utf-8','gbk','./images/F'.$filename);
+	$output($imgNew,$newName);
+	//销毁画布
+	imagedestroy($img);
+	imagedestroy($imgNew);
+	die('操作成功！');
+}
