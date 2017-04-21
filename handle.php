@@ -279,12 +279,20 @@ function change_mode_4($arr,$radio,$fontSize){
 	$white = imagecolorallocate($imgNew, 255,255,255);
 	imagefill($imgNew,0,0,$white);	
 
-	// $x = (2*$radio+3)*cos(PI/6)
-	// $y = (2*$radio+3)/2;
-	for ($i = 0,$x = $radio+3; $x < $info[0]; $x = $x+$radio*2+3,$i++) { 
-		for ($j = 0,$y=$radio+3; $y < $info[1]; $y = $y+$radio*2+3,$j++) { 
+	for ($i = 0,$x = (2*$radio+3)*cos(pi()/6); $x < $info[0]; $x = $x+$radio*2+3,$i++) { 
+		for ($j = 0,$y = (2*$radio+3)/2; $y < $info[1]; $y = $y+$radio*2+3,$j++) { 
 			$rgb = imagecolorat($img, $x, $y);
-			imagefilledrectangle($imgNew,$x - $radio,$y - $radio,$x + $radio,$y + $radio,$rgb);
+			if (($i+$j)%2 != 0) {
+				$values = [
+										$radio*1.8+$x,0+$y,
+										$radio*1.8*cos(pi()/3)+$x,$radio*1.8*sin(pi()/3)+$y,
+										$radio*1.8*cos(pi()/3*2)+$x,$radio*1.8*sin(pi()/3*2)+$y,
+										$radio*1.8*cos(pi())+$x,$radio*1.8*sin(pi())+$y,
+										$radio*1.8*cos(pi()/3*4)+$x,$radio*1.8*sin(pi()/3*4)+$y,
+										$radio*1.8*cos(pi()/3*5)+$x,$radio*1.8*sin(pi()/3*5)+$y,
+									];
+				imagefilledpolygon($imgNew,$values,6,$rgb);
+			}
 		}
 	}
 	$output = str_replace('/', '', $info['mime']);
